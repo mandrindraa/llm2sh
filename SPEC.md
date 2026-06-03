@@ -70,7 +70,7 @@
 
 | Layer | Choice | Rationale |
 |---|---|---|
-| Language | Python 3.11+ | Rich ecosystem, excellent TUI and AI libraries |
+| Language | Python 3.14+ | Rich ecosystem, excellent TUI and AI libraries |
 | LLM Backend | OpenAI API (GPT-4o) | Best-in-class instruction following and code generation |
 | TUI Framework | Textual | Modern, async-native, CSS-styled TUI for Python |
 | Shell Execution | Python `subprocess` | Safe, cross-platform command execution |
@@ -87,17 +87,17 @@
 [project]
 name = "llm2sh"
 version = "0.1.0"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 
 dependencies = [
-    "textual>=0.59.0",          # Rich TUI framework
-    "openai>=1.30.0",           # OpenAI Python SDK
-    "pydantic>=2.7.0",          # Data validation and parsing
-    "pydantic-settings>=2.3.0", # Config management from env/.env
-    "rich>=13.7.0",             # Terminal formatting (used by Textual internally)
-    "pyperclip>=1.8.0",         # Copy command to clipboard
-    "python-dotenv>=1.0.0",     # Load .env file
-    "aiofiles>=23.2.0",         # Async file I/O for history/logging
+    "aiofiles>=25.1.0", # async I/O file
+    "openai>=2.40.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.1",
+    "pyperclip>=1.11.0",
+    "python-dotenv>=1.2.2",
+    "rich>=15.0.0",
+    "textual>=8.2.7",
 ]
 ```
 

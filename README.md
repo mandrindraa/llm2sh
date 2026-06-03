@@ -10,7 +10,7 @@
 
 **Type what you want. Get the command that does it.**
 
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.14+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=flat-square&logo=openai&logoColor=white)](https://openai.com)
 [![Textual](https://img.shields.io/badge/TUI-Textual-000000?style=flat-square)](https://textual.textualize.io)
 [![License](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
@@ -101,7 +101,7 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 ### Prerequisites
 
-- Python **3.11+**
+- Python **3.14+**
 - An **OpenAI API key** ([get one here](https://platform.openai.com/api-keys))
 - `uv` package manager ([install](https://docs.astral.sh/uv/getting-started/installation/)) — recommended
   - or `pip` if you prefer
@@ -229,7 +229,7 @@ Want to understand how it all fits together? Start with [`llm2sh/core/client.py`
 
 | Layer | Technology |
 |---|---|
-| Language | Python 3.11+ |
+| Language | Python 3.14+ |
 | LLM | OpenAI API (GPT-4o) |
 | TUI | [Textual](https://textual.textualize.io/) |
 | Data validation | [Pydantic v2](https://docs.pydantic.dev/) |
