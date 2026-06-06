@@ -10,6 +10,8 @@ from textual.widgets import Static, Button
 from textual.containers import Container, ScrollableContainer
 from llm2sh.core.models import CommandResult, RiskLevel
 
+from llm2sh.tui.widgets.output_pane import OutputPane
+
 class ResultPanel(Container):
     class RunPressed(Message):
         def __init__(self, command: str, risk_level: RiskLevel) -> None:
@@ -37,12 +39,25 @@ class ResultPanel(Container):
             yield Static("", id="explanation-container")
             yield Static("", id="flags-container")
             yield Static("", id="risk-container")
+            yield OutputPane(id="output-pane")
         
         with Container(id="action-bar"):
             yield Button("Run", id="btn-run", variant="success", disabled=True)
             yield Button("Copy", id="btn-copy", variant="primary", disabled=True)
             yield Button("Refine", id="btn-refine", variant="default", disabled=True)
             yield Button("Save", id="btn-save", variant="default", disabled=True)
+
+    def show_output(self, show: bool) -> None:
+        """Toggles the display of the execution output pane."""
+        self.query_one("#output-pane").styles.display = "block" if show else "none"
+        
+        display_val = "none" if show else "block"
+        self.query_one("#result-status").styles.display = display_val
+        self.query_one("#command-container").styles.display = display_val
+        self.query_one("#explanation-container").styles.display = display_val
+        self.query_one("#flags-container").styles.display = display_val
+        self.query_one("#risk-container").styles.display = display_val
+
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Propagate button actions to the main application."""

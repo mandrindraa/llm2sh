@@ -134,3 +134,24 @@ ConfirmModal {
 #dialog-buttons Button {
     margin-left: 1;
 }
+
+OutputPane {
+    display: none;
+    height: 1fr;
+    border: solid $border;
+    background: $surface;
+    margin-top: 1;
+    padding: 1;
+}
+
+#output-title {
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+}
+
+#output-log {
+    height: 1fr;
+    background: transparent;
+}
+

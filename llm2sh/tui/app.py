@@ -11,10 +11,13 @@ from llm2sh.core.client import OpenAIClient
 from llm2sh.core.processor import QueryProcessor
 from llm2sh.core.validator import SafetyValidator
 from llm2sh.core.models import CommandResult, RiskLevel
+from llm2sh.core.executor import ShellExecutor
 
 from llm2sh.tui.widgets.history_panel import HistoryPanel
 from llm2sh.tui.widgets.input_panel import InputPanel
 from llm2sh.tui.widgets.result_panel import ResultPanel
+from llm2sh.tui.widgets.output_pane import OutputPane
+from llm2sh.tui.widgets.confirm_modal import ConfirmModal
 
 class LLM2ShApp(App):
     CSS_PATH: ClassVar[str] = "styles/main.tcss"
@@ -22,9 +25,10 @@ class LLM2ShApp(App):
     BINDINGS: ClassVar[list[Binding]] = [
         Binding("ctrl+q", "quit", "Quit", show=True),
         Binding("ctrl+c", "copy_command", "Copy Command", show=True),
-        Binding("ctrl+r", "run_command", "Run Command", show=True),
+        Binding("ctrl+r", "run_command", "Run", show=True),
+        Binding("ctrl+k", "kill_process", "Kill", show=True),
         Binding("ctrl+e", "focus_input", "Focus Input", show=True),
-        Binding("escape", "clear_input", "Clear", show=True),
+        Binding("escape", "clear_input", "Clear / Close Output", show=True),
     ]
 
     def __init__(self, **kwargs) -> None:
@@ -33,6 +37,7 @@ class LLM2ShApp(App):
         self.processor = QueryProcessor()
         self.client = OpenAIClient()
         self.validator = SafetyValidator()
+        self.executor = ShellExecutor()
         self.queries_history: list[str] = []
         self.session_messages: list[dict[str, str]] = []
 
@@ -71,6 +76,9 @@ class LLM2ShApp(App):
 
         result_panel = self.query_one(ResultPanel)
         
+        # Close output pane if open
+        result_panel.show_output(False)
+
         # Determine mode from tabs
         active_tab_id = self.query_one("#mode-selector", Tabs).active_tab.id
         mode_prefix = ""
@@ -127,6 +135,35 @@ class LLM2ShApp(App):
         """Handle clicks on the history list items."""
         self.query_one(InputPanel).set_value(message.query)
 
+    # Execution Engine Integration
+    def run_current_command(self, command: str, risk_level: RiskLevel, risk_reason: str | None) -> None:
+        """Trigger command execution flow, prompting confirmation if caution/danger."""
+        if risk_level == RiskLevel.SAFE:
+            self.run_worker(self.execute_command(command))
+        else:
+            def handle_modal_response(confirmed: bool) -> None:
+                if confirmed:
+                    self.run_worker(self.execute_command(command))
+                else:
+                    self.notify("Execution cancelled.")
+
+            self.push_screen(
+                ConfirmModal(command, risk_level, risk_reason),
+                callback=handle_modal_response
+            )
+
+    async def execute_command(self, command: str) -> None:
+        """Asynchronously run command and capture output into the OutputPane."""
+        res_panel = self.query_one(ResultPanel)
+        res_panel.show_output(True)
+        
+        out_pane = res_panel.query_one(OutputPane)
+        out_pane.clear_output()
+        out_pane.write_output(f"[bold cyan]$ {command}[/]\n")
+
+        async for chunk in self.executor.execute(command):
+            out_pane.write_output(chunk)
+
     # Keyboard Action Bindings
     def action_copy_command(self) -> None:
         res_panel = self.query_one(ResultPanel)
@@ -135,24 +172,44 @@ class LLM2ShApp(App):
             self.notify("Command copied to clipboard!")
 
     def action_run_command(self) -> None:
-        # Placeholder for Milestone 3 execution
         res_panel = self.query_one(ResultPanel)
         if res_panel.current_result:
-            self.notify(f"Running command: {res_panel.current_result.command}")
+            self.run_current_command(
+                res_panel.current_result.command,
+                res_panel.current_result.risk_level,
+                res_panel.current_result.risk_reason
+            )
+
+    def action_kill_process(self) -> None:
+        if self.executor.kill():
+            self.notify("Process terminated.")
+            res_panel = self.query_one(ResultPanel)
+            if res_panel.query_one("#output-pane").styles.display == "block":
+                res_panel.query_one(OutputPane).write_output("\n[bold red][Process terminated by user][/]\n")
+        else:
+            self.notify("No active process to terminate.")
 
     def action_focus_input(self) -> None:
         self.query_one(InputPanel).focus()
 
     def action_clear_input(self) -> None:
+        res_panel = self.query_one(ResultPanel)
+        if res_panel.query_one("#output-pane").styles.display == "block":
+            res_panel.show_output(False)
+            return
         self.query_one(InputPanel).set_value("")
 
+    # Panel Event Subscriptions
     def on_result_panel_copy_pressed(self, message: ResultPanel.CopyPressed) -> None:
         pyperclip.copy(message.command)
         self.notify("Command copied to clipboard!")
 
     def on_result_panel_run_pressed(self, message: ResultPanel.RunPressed) -> None:
-        # Placeholder for execution
-        self.notify(f"Running: {message.command}")
+        self.run_current_command(
+            message.command,
+            message.risk_level,
+            self.query_one(ResultPanel).current_result.risk_reason
+        )
         
     def on_result_panel_refine_pressed(self) -> None:
         res_panel = self.query_one(ResultPanel)
