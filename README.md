@@ -45,7 +45,7 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 1. **Help people learn Unix/Linux** — every generated command comes with a detailed explanation. llm2sh is not a crutch; it's a teacher. You'll understand *why* a command works, not just copy-paste it blindly.
 
-2. **Teach how to build LLM-powered terminal apps in Python** — the codebase is written to be read. Every module is documented, every architectural decision explained. If you want to learn how to integrate the OpenAI API into a real Python application with a proper TUI, this project is your guide.
+2. **Learn how to build LLM-powered terminal apps in Python** — the codebase is written to be read. Every module is documented, every architectural decision explained.
 
 > **"The best way to learn the shell is to use it. The best way to use it is to understand it."**
 
