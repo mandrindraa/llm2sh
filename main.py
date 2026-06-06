@@ -1,6 +1,5 @@
-def main():
-    print("Hello from llm2sh!")
-
+from llm2sh.__main__ import main
 
 if __name__ == "__main__":
     main()
+
