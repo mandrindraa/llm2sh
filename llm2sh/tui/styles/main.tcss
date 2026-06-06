@@ -1,0 +1,136 @@
+/* Core Theme & Palette */
+$background: #0f172a;      /* slate-900 */
+$surface: #1e293b;         /* slate-800 */
+$border: #334155;          /* slate-700 */
+$accent: #6366f1;          /* indigo-500 */
+$text: #f8fafc;            /* slate-50 */
+$text-dim: #94a3b8;        /* slate-400 */
+
+Screen {
+    background: $background;
+    color: $text;
+}
+
+#header {
+    height: 3;
+    background: $surface;
+    border-bottom: solid $border;
+    content-align: left middle;
+    padding: 0 2;
+    layout: horizontal;
+}
+
+#title {
+    width: 1fr;
+    text-style: bold;
+    color: $accent;
+    content-align: left middle;
+}
+
+#mode-selector {
+    width: auto;
+}
+
+#main-container {
+    height: 1fr;
+    layout: horizontal;
+}
+
+HistoryPanel {
+    width: 25%;
+    max-width: 35;
+    background: $background;
+    border-right: solid $border;
+    padding: 1;
+}
+
+HistoryPanel #history-list {
+    height: 1fr;
+    border: none;
+    background: transparent;
+}
+
+ResultPanel {
+    width: 75%;
+    background: $background;
+    padding: 1 2;
+}
+
+#result-scroll {
+    height: 1fr;
+    overflow-y: scroll;
+}
+
+#command-container {
+    background: $surface;
+    border: solid $border;
+    padding: 1 2;
+    margin-bottom: 1;
+    color: #38bdf8; /* sky-400 */
+}
+
+#action-bar {
+    height: 3;
+    layout: horizontal;
+    align: right middle;
+    margin-top: 1;
+}
+
+#action-bar Button {
+    margin-left: 1;
+}
+
+InputPanel {
+    height: auto;
+    min-height: 4;
+    background: $surface;
+    border-top: solid $border;
+    padding: 1 2;
+}
+
+InputPanel Input {
+    width: 100%;
+    border: solid $border;
+    background: $background;
+    color: $text;
+}
+
+InputPanel Input:focus {
+    border: solid $accent;
+}
+
+/* Confirm Modal Styling */
+ConfirmModal {
+    align: center middle;
+}
+
+#dialog {
+    width: 60;
+    height: auto;
+    background: $surface;
+    border: thick $border;
+    padding: 1 2;
+}
+
+#dialog.caution {
+    border: thick #eab308; /* yellow-500 */
+}
+
+#dialog.danger {
+    border: thick #ef4444; /* red-500 */
+}
+
+#dialog-title {
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#dialog-buttons {
+    layout: horizontal;
+    align: right middle;
+    margin-top: 1;
+}
+
+#dialog-buttons Button {
+    margin-left: 1;
+}

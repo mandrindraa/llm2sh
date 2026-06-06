@@ -84,15 +84,22 @@ async def run_cli(query: str) -> int:
     return 0
 
 def main():
-    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
-        console.print("[bold cyan]llm2sh[/] - Translate plain English into Unix/Linux shell commands.")
-        console.print("\n[bold]Usage:[/] python -m llm2sh \"<natural language query>\"")
-        console.print("[bold]Example:[/] python -m llm2sh \"find log files modified in the last 3 days\"")
-        sys.exit(0)
-
-    query = sys.argv[1]
-    exit_code = asyncio.run(run_cli(query))
-    sys.exit(exit_code)
+    if len(sys.argv) >= 2:
+        if sys.argv[1] in ("-h", "--help"):
+            console.print("[bold cyan]llm2sh[/] - Translate plain English into Unix/Linux shell commands.")
+            console.print("\n[bold]Usage:[/] python -m llm2sh \"<natural language query>\"")
+            console.print("         python -m llm2sh  (starts the interactive TUI)")
+            console.print("\n[bold]Example:[/] python -m llm2sh \"find log files modified in the last 3 days\"")
+            sys.exit(0)
+        
+        query = sys.argv[1]
+        exit_code = asyncio.run(run_cli(query))
+        sys.exit(exit_code)
+    else:
+        from llm2sh.tui.app import LLM2ShApp
+        app = LLM2ShApp()
+        app.run()
 
 if __name__ == "__main__":
     main()
+
