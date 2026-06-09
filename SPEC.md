@@ -209,14 +209,14 @@ The project is divided into **4 milestones**, each producing a working, testable
 
 #### Tasks
 
-- [ ] Set up project structure with `uv` and `pyproject.toml`
-- [ ] Implement `Config` class using `pydantic-settings` (API key, model, shell type, theme)
-- [ ] Write `OpenAIClient` — async wrapper around the OpenAI SDK with streaming support
-- [ ] Design the **system prompt**: instruct the model to always return JSON matching `CommandResult`
-- [ ] Implement `QueryProcessor` — collects OS info, current shell, `$CWD`, last 10 history entries
-- [ ] Implement `SafetyValidator` — rule-based + LLM-assisted risk classification
-- [ ] Write unit tests for the engine components
-- [ ] CLI smoke test: `python -m llm2sh "list all files larger than 10MB"`
+- [✔️] Set up project structure with `uv` and `pyproject.toml`
+- [✔️] Implement `Config` class using `pydantic-settings` (API key, model, shell type, theme)
+- [✔️] Write `OpenAIClient` — async wrapper around the OpenAI SDK with streaming support
+- [✔️] Design the **system prompt**: instruct the model to always return JSON matching `CommandResult`
+- [✔️] Implement `QueryProcessor` — collects OS info, current shell, `$CWD`, last 10 history entries
+- [✔️] Implement `SafetyValidator` — rule-based + LLM-assisted risk classification
+- [✔️] Write unit tests for the engine components
+- [✔️] CLI smoke test: `python -m llm2sh "list all files larger than 10MB"`
 
 #### Deliverable
 
@@ -230,14 +230,14 @@ A Python script that accepts a string and prints a formatted command + explanati
 
 #### Tasks
 
-- [ ] Scaffold `Textual` app with CSS layout
-- [ ] Build **InputPanel**: query input box, mode toggle (Translate / Explain / Script), submit button
-- [ ] Build **ResultPanel**: syntax-highlighted command display, explanation section, action buttons (Run / Copy / Refine / Save)
-- [ ] Build **HistoryPanel**: scrollable session log with clickable past queries
-- [ ] Wire TUI to the core engine (async message passing)
-- [ ] Implement streaming response — tokens stream into the ResultPanel in real time
-- [ ] Add keyboard shortcuts: `Ctrl+Enter` submit, `Ctrl+C` copy, `Ctrl+R` run, `Ctrl+E` explain, `Esc` clear
-- [ ] Implement `pyperclip` clipboard integration
+- [✔️] Scaffold `Textual` app with CSS layout
+- [✔️] Build **InputPanel**: query input box, mode toggle (Translate / Explain / Script), submit button
+- [✔️] Build **ResultPanel**: syntax-highlighted command display, explanation section, action buttons (Run / Copy / Refine / Save)
+- [✔️] Build **HistoryPanel**: scrollable session log with clickable past queries
+- [✔️] Wire TUI to the core engine (async message passing)
+- [✔️] Implement streaming response — tokens stream into the ResultPanel in real time
+- [✔️] Add keyboard shortcuts: `Ctrl+Enter` submit, `Ctrl+C` copy, `Ctrl+R` run, `Ctrl+E` explain, `Esc` clear
+- [✔️] Implement `pyperclip` clipboard integration
 
 #### Deliverable
 
@@ -264,7 +264,7 @@ Users can safely run commands from within the TUI, with risk warnings and confir
 
 ---
 
-### Milestone 4 — Advanced Features & Polish (Week 6–7)
+### Milestone 4 — Advanced Features & Polish
 
 **Goal:** Script generation, reverse mode, refinement loop, final UX polish.
 
