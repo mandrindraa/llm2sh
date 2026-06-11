@@ -17,7 +17,7 @@ async def run_cli(query: str) -> int:
     try:
         # Load settings to verify API key
         settings = get_settings()
-        if not settings.openai_api_key or "sk-" not in settings.openai_api_key:
+        if not settings.openai_api_key:
             console.print("[bold red]Error:[/] OPENAI_API_KEY environment variable is not set or invalid.")
             console.print("Please set it in your environment or in a [bold].env[/] file at the root of the project.")
             return 1
