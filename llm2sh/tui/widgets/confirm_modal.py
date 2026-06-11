@@ -15,7 +15,7 @@ class ConfirmModal(ModalScreen[bool]):
 
     def compose(self):
         theme_class = "caution" if self.risk_level == RiskLevel.CAUTION else "danger"
-        title_prefix = "⚠️ CAUTION" if self.risk_level == RiskLevel.CAUTION else "🛑 DANGER: High Risk Command!"
+        title_prefix = "🟡 CAUTION" if self.risk_level == RiskLevel.CAUTION else "🔴 DANGER: High Risk Command!"
         
         with Container(id="dialog", classes=theme_class):
             yield Label(title_prefix, id="dialog-title")
