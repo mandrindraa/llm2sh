@@ -10,6 +10,11 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    openai_base_url: str = Field(
+        default="",
+        validation_alias=AliasChoices("OPENAI_BASE_URL", "openai_base_url")
+    )
+
     openai_api_key: str = Field(
         validation_alias=AliasChoices("OPENAI_API_KEY", "openai_api_key")
     )

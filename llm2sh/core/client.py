@@ -7,7 +7,7 @@ from llm2sh.core.models import CommandResult
 class OpenAIClient:
     def __init__(self) -> None:
         self.settings = get_settings()
-        self.client = AsyncOpenAI(api_key=self.settings.openai_api_key)
+        self.client = AsyncOpenAI(base_url=self.settings.openai_base_url, api_key=self.settings.openai_api_key)
 
     async def generate_command(self, messages: list[dict[str, str]]) -> CommandResult:
         """
