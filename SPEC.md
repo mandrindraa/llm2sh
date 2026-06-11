@@ -270,10 +270,10 @@ Users can safely run commands from within the TUI, with risk warnings and confir
 
 #### Tasks
 
-- [ ] **Reverse mode**: paste a command → get explanation (toggle with `Ctrl+X`)
-- [ ] **Script generator**: multi-step NL → full bash script with shebang, comments, error handling
-- [ ] **Iterative refinement**: follow-up queries that build on the previous command
-- [ ] **Context awareness**: auto-detect distro, shell version, available tools (`which fzf`, etc.)
+- [✔️] **Reverse mode**: paste a command → get explanation (toggle with `Ctrl+X`)
+- [✔️] **Script generator**: multi-step NL → full bash script with shebang, comments, error handling
+- [✔️] **Iterative refinement**: follow-up queries that build on the previous command
+- [✔️] **Context awareness**: auto-detect distro, shell version, available tools (`which fzf`, etc.)
 - [ ] Settings screen: theme, default shell, model selection, API key management
 - [ ] First-run onboarding: API key prompt, quick tutorial
 - [ ] Full README with install instructions, demo GIF

@@ -53,31 +53,7 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 ##  Demo
 
-```
-╔══════════════════════════════════════════════════════════════════╗
-║   llm2sh  v0.1.0               [Translate] [Explain] [Script] ║
-╠══════════════════╦═══════════════════════════════════════════════╣
-║  HISTORY         ║  RESULT                                       ║
-║  ─────────────   ║  ─────────────────────────────────────────    ║
-║  > list pdfs     ║  $ find . -name "*.log" -size +50M -mtime -3  ║
-║  > compress logs ║                                               ║
-║  > find big dirs ║   Explanation                               ║
-║                  ║  Search the entire filesystem for files       ║
-║                  ║  named *.log that are larger than 50MB and    ║
-║                  ║  were modified in the last 3 days.            ║
-║                  ║                                               ║
-║                  ║  🏳 Flags                                     ║
-║                  ║  -name   filter by filename pattern           ║
-║                  ║  -size   filter by file size (+50M = over 50) ║
-║                  ║  -mtime  filter by modification time in days  ║
-║                  ║                                               ║
-║                  ║  Risk:  SAFE                                ║
-║                  ║                                               ║
-║                  ║  [▶ Run]  [⎘ Copy]  [✎ Refine]  [ Save]   ║
-╠══════════════════╩═══════════════════════════════════════════════╣
-║  > find all log files larger than 50MB modified in last 3 days   ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+![Demo](LLM2ShApp_2026-06-11T21_26_15_221395.svg)
 
 ---
 

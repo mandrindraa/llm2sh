@@ -33,8 +33,6 @@ class LLM2ShApp(App):
         Binding("ctrl+k", "kill_process", "Kill", show=True),
         Binding("ctrl+e", "focus_input", "Focus Input", show=True),
         Binding("ctrl+x", "toggle_mode", "Toggle Mode", show=True),
-        Binding("ctrl+h", "toggle_history", "History Panel", show=True),
-        Binding("ctrl+comma", "open_settings", "Settings", show=True),
         Binding("escape", "clear_input", "Clear / Close Output", show=True),
     ]
 
@@ -52,13 +50,13 @@ class LLM2ShApp(App):
 
     def compose(self) -> ComposeResult:
         with Container(id="header"):
-            yield Label("llm2sh  v0.1.0", id="title")
             yield Tabs(
                 Tab("Translate", id="tab-translate"),
                 Tab("Explain", id="tab-explain"),
                 Tab("Script", id="tab-script"),
                 id="mode-tabs"
             )
+            yield Label("llm2sh  v0.1.0", id="title")
         
         with Container(id="main-container"):
             yield HistoryPanel()
