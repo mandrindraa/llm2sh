@@ -24,5 +24,5 @@ class HistoryPanel(Container):
         """Handle click/selection of a history item and post message to app."""
         if event.item:
             label = event.item.query_one(Label)
-            query_text = str(label.renderable).lstrip("> ")
+            query_text = str(label.content).lstrip("> ")
             self.post_message(self.QuerySelected(query_text))

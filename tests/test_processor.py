@@ -38,3 +38,25 @@ def test_build_messages(mock_history):
         assert "User Environment Context" in messages[1]["content"]
         assert messages[-1]["role"] == "user"
         assert messages[-1]["content"] == "find pdf files"
+
+
+def test_mode_based_prompts_and_context():
+    processor = QueryProcessor()
+    
+    # Test shell version detection
+    version = processor.get_shell_version("echo")
+    assert version != ""
+    
+    # Test available tools check
+    tools = processor.get_available_tools()
+    assert isinstance(tools, list)
+    
+    # Test system prompt changes based on mode
+    translate_prompt = processor.get_system_prompt("translate")
+    explain_prompt = processor.get_system_prompt("explain")
+    script_prompt = processor.get_system_prompt("script")
+    
+    assert "convert natural language requests" in translate_prompt
+    assert "explain this command" in explain_prompt
+    assert "write a complete shell/bash script" in script_prompt
+

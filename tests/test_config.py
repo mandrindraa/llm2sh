@@ -6,7 +6,7 @@ from llm2sh.config import Settings, get_settings
 def test_default_settings():
     # Mock environment to ensure API key is present but others use defaults
     with mock.patch.dict(os.environ, {"OPENAI_API_KEY": "sk-testkey"}):
-        settings = Settings()
+        settings = Settings(_env_file=None)
         assert settings.openai_api_key == "sk-testkey"
         assert settings.model == "gpt-4o"
         assert settings.theme == "dark"
@@ -23,7 +23,7 @@ def test_alias_resolution():
         "LLM2SH_HISTORY_SIZE": "25"
     }
     with mock.patch.dict(os.environ, env_vars):
-        settings = Settings()
+        settings = Settings(_env_file=None)
         assert settings.openai_api_key == "sk-envkey"
         assert settings.model == "gpt-3.5-turbo"
         assert settings.shell == "zsh"
