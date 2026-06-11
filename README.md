@@ -22,7 +22,7 @@
 
 ---
 
-## ✨ What Is llm2sh?
+##  What Is llm2sh?
 
 **llm2sh** is an **open-source, educational** terminal application that translates plain English into Unix/Linux shell commands — directly inside a rich, interactive TUI.
 
@@ -39,7 +39,7 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 ---
 
-## 🎓 Educational Purpose
+##  Educational Purpose
 
 **llm2sh** is built as an **educational project** with two goals:
 
@@ -51,17 +51,17 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 ---
 
-## 📸 Demo
+##  Demo
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║  🧠 llm2sh  v0.1.0               [Translate] [Explain] [Script] ║
+║   llm2sh  v0.1.0               [Translate] [Explain] [Script] ║
 ╠══════════════════╦═══════════════════════════════════════════════╣
 ║  HISTORY         ║  RESULT                                       ║
 ║  ─────────────   ║  ─────────────────────────────────────────    ║
 ║  > list pdfs     ║  $ find . -name "*.log" -size +50M -mtime -3  ║
 ║  > compress logs ║                                               ║
-║  > find big dirs ║  📖 Explanation                               ║
+║  > find big dirs ║   Explanation                               ║
 ║                  ║  Search the entire filesystem for files       ║
 ║                  ║  named *.log that are larger than 50MB and    ║
 ║                  ║  were modified in the last 3 days.            ║
@@ -71,9 +71,9 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 ║                  ║  -size   filter by file size (+50M = over 50) ║
 ║                  ║  -mtime  filter by modification time in days  ║
 ║                  ║                                               ║
-║                  ║  Risk: ✅ SAFE                                ║
+║                  ║  Risk:  SAFE                                ║
 ║                  ║                                               ║
-║                  ║  [▶ Run]  [⎘ Copy]  [✎ Refine]  [💾 Save]   ║
+║                  ║  [▶ Run]  [⎘ Copy]  [✎ Refine]  [ Save]   ║
 ╠══════════════════╩═══════════════════════════════════════════════╣
 ║  > find all log files larger than 50MB modified in last 3 days   ║
 ╚══════════════════════════════════════════════════════════════════╝
@@ -81,24 +81,24 @@ llm2sh shows you the command, explains every part of it, warns you if it's dange
 
 ---
 
-## 🚀 Features
+##  Features
 
 | Feature | Description |
 |---|---|
-| 🔤 **NL → Command** | Describe what you want in plain English, get the exact shell command |
-| 📖 **Explain Mode** | Every command comes with a breakdown of each flag and what it does |
-| 🔁 **Reverse Mode** | Paste any command, get a plain-English explanation (`Ctrl+X`) |
-| ⚠️ **Safety Validator** | Dangerous commands (`rm -rf`, `dd`, `mkfs`) are flagged before execution |
-| 🧪 **Dry Run** | Preview what a command would do without actually executing it |
-| ▶️ **In-TUI Execution** | Run commands directly from the interface and see live output |
-| 🔗 **Pipeline Support** | Generate complex multi-command pipelines from a single sentence |
-| 📜 **Script Generator** | Describe a multi-step workflow, get a complete Bash script |
-| 🧵 **Refinement Loop** | Follow up with "but only for .py files" and llm2sh adapts the last command |
-| 📋 **Clipboard Copy** | Copy any command to your clipboard instantly (`Ctrl+C`) |
+|  **NL → Command** | Describe what you want in plain English, get the exact shell command |
+|  **Explain Mode** | Every command comes with a breakdown of each flag and what it does |
+|  **Reverse Mode** | Paste any command, get a plain-English explanation (`Ctrl+X`) |
+|  **Safety Validator** | Dangerous commands (`rm -rf`, `dd`, `mkfs`) are flagged before execution |
+|  **Dry Run** | Preview what a command would do without actually executing it |
+|  **In-TUI Execution** | Run commands directly from the interface and see live output |
+|  **Pipeline Support** | Generate complex multi-command pipelines from a single sentence |
+|  **Script Generator** | Describe a multi-step workflow, get a complete Bash script |
+|  **Refinement Loop** | Follow up with "but only for .py files" and llm2sh adapts the last command |
+|  **Clipboard Copy** | Copy any command to your clipboard instantly (`Ctrl+C`) |
 
 ---
 
-## 📦 Installation
+##  Installation
 
 ### Prerequisites
 
@@ -128,7 +128,7 @@ uv run llm2sh
 ### Install with `pip`
 
 ```bash
-git clone https://github.com/your-username/llm2sh.git
+git clone https://github.com/mandrindraa/llm2sh.git
 cd llm2sh
 
 python -m venv .venv
@@ -145,14 +145,14 @@ python -m llm2sh
 ### Install as a global tool with `pipx`
 
 ```bash
-pipx install git+https://github.com/your-username/llm2sh.git
+pipx install git+https://github.com/mandrindraa/llm2sh.git
 # Then run from anywhere:
 llm2sh
 ```
 
 ---
 
-## ⚙️ Configuration
+##  Configuration
 
 llm2sh is configured via a `.env` file at the project root. Copy the example and fill in your values:
 
@@ -178,7 +178,7 @@ LLM2SH_HISTORY_SIZE=10        # How many past commands to include as context
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+##  Keyboard Shortcuts
 
 | Shortcut | Action |
 |---|---|
@@ -195,7 +195,7 @@ LLM2SH_HISTORY_SIZE=10        # How many past commands to include as context
 
 ---
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 llm2sh/
@@ -226,7 +226,7 @@ Want to understand how it all fits together? Start with [`llm2sh/core/client.py`
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -240,7 +240,7 @@ Want to understand how it all fits together? Start with [`llm2sh/core/client.py`
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 llm2sh is an open-source educational project and **contributions are warmly welcome** — whether you're fixing a typo, adding a feature, improving the prompts, or writing a tutorial.
 
@@ -263,12 +263,12 @@ uv run ruff check .
 
 ### Ways to Contribute
 
-- 🐛 **Bug reports** — open an issue with steps to reproduce
-- 💡 **Feature suggestions** — open a discussion before implementing large features
-- 📖 **Documentation** — improve the README, add docstrings, write tutorials
-- 🧪 **Tests** — add unit or integration tests for untested modules
-- 🎨 **TUI improvements** — new themes, better layouts, accessibility fixes
-- 🌍 **Prompt improvements** — better system prompts, edge case handling
+-  **Bug reports** — open an issue with steps to reproduce
+-  **Feature suggestions** — open a discussion before implementing large features
+-  **Documentation** — improve the README, add docstrings, write tutorials
+-  **Tests** — add unit or integration tests for untested modules
+-  **TUI improvements** — new themes, better layouts, accessibility fixes
+-  **Prompt improvements** — better system prompts, edge case handling
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
@@ -278,7 +278,7 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 
 ---
 
-## 📚 Learning Resources
+##  Learning Resources
 
 If you're using llm2sh to learn, here are some resources to go deeper:
 
@@ -295,7 +295,7 @@ If you're using llm2sh to learn, here are some resources to go deeper:
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 - [x] Core NL → command engine
 - [x] 3-panel Textual TUI
@@ -310,7 +310,7 @@ See [SPEC.md](SPEC.md) for the full project specification and architecture docum
 
 ---
 
-## 📄 License
+##  License
 
 llm2sh is released under the **MIT License** — free to use, fork, learn from, and build upon.
 
@@ -318,7 +318,7 @@ See [LICENSE](LICENSE) for the full text.
 
 ---
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 - [Textual](https://github.com/Textualize/textual) by Will McGugan — the incredible TUI framework powering this app
 - [OpenAI](https://openai.com) — the API making the translation magic happen
@@ -330,6 +330,6 @@ See [LICENSE](LICENSE) for the full text.
 
 Built with ❤️ for the terminal lovers and the curious learners.
 
-**[⭐ Star this repo](https://github.com/your-username/llm2sh)** if you find it useful or educational!
+**[⭐ Star this repo](https://github.com/mandrindraa/llm2sh)** if you find it useful or educational!
 
 </div>

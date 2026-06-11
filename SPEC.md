@@ -251,12 +251,12 @@ A functional TUI that accepts queries and displays results with streaming.
 
 #### Tasks
 
-- [ ] Implement `ShellExecutor` with dry-run and live modes
-- [ ] Build **ConfirmationModal** for CAUTION and DANGER commands
-- [ ] Display execution output (stdout/stderr) inside the TUI in a dedicated output pane
-- [ ] Implement `--dry-run` global flag: show effect without executing
-- [ ] Add execution result to session history
-- [ ] Handle long-running commands: show spinner, allow `Ctrl+K` to kill process
+- [✔️] Implement `ShellExecutor` with dry-run and live modes
+- [✔️] Build **ConfirmationModal** for CAUTION and DANGER commands
+- [✔️] Display execution output (stdout/stderr) inside the TUI in a dedicated output pane
+- [✔️] Implement `--dry-run` global flag: show effect without executing
+- [✔️] Add execution result to session history
+- [✔️] Handle long-running commands: show spinner, allow `Ctrl+K` to kill process
 
 #### Deliverable
 
@@ -329,9 +329,9 @@ Feature-complete v1.0 ready for public release.
 
 | Level | Color | Icon | Behavior |
 |---|---|---|---|
-| SAFE | Green | ✅ | Run button active immediately |
-| CAUTION | Yellow | ⚠️ | Single confirmation dialog |
-| DANGER | Red | 🛑 | Double confirmation + forced 3s wait |
+| SAFE | Green | 🟢 | Run button active immediately |
+| CAUTION | Yellow | 🟡 | Single confirmation dialog |
+| DANGER | Red | 🔴 | Double confirmation + forced 3s wait |
 
 ---
 

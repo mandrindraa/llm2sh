@@ -68,13 +68,13 @@ async def run_cli(query: str) -> int:
 
     # Risk level color formatting
     risk_style = "green"
-    risk_icon = "✅"
+    risk_icon = "🟢"
     if result.risk_level == RiskLevel.CAUTION:
         risk_style = "yellow"
-        risk_icon = "⚠️"
+        risk_icon = "🟡"
     elif result.risk_level == RiskLevel.DANGER:
         risk_style = "bold red"
-        risk_icon = "🛑"
+        risk_icon = "🔴"
 
     console.print(f"[bold {risk_style}]Risk Level:[/] {risk_icon} {result.risk_level.value.upper()}")
     if result.risk_reason:
