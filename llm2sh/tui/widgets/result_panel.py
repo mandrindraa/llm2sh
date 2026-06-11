@@ -131,11 +131,11 @@ class ResultPanel(Container):
         risk_container = self.query_one("#risk-container", Static)
         risk_text = Text()
         if result.risk_level == RiskLevel.SAFE:
-            risk_text.append("Risk Level: ✅ SAFE\n", style="green")
+            risk_text.append("Risk Level: 🟢 SAFE\n", style="green")
         elif result.risk_level == RiskLevel.CAUTION:
-            risk_text.append("Risk Level: ⚠️ CAUTION\n", style="yellow")
+            risk_text.append("Risk Level: 🟡 CAUTION\n", style="yellow")
         elif result.risk_level == RiskLevel.DANGER:
-            risk_text.append("Risk Level: 🛑 DANGER\n", style="bold red")
+            risk_text.append("Risk Level: 🔴 DANGER\n", style="bold red")
 
         if result.risk_reason:
             risk_text.append(f"Reason: {result.risk_reason}\n", style="dim")

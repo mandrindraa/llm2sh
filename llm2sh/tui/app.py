@@ -43,13 +43,7 @@ class LLM2ShApp(App):
 
     def compose(self) -> ComposeResult:
         with Container(id="header"):
-            yield Label("🧠 llm2sh  v0.1.0", id="title")
-            yield Tabs(
-                Tab("Translate", id="tab-translate"),
-                Tab("Explain", id="tab-explain"),
-                Tab("Script", id="tab-script"),
-                id="mode-selector"
-            )
+            yield Label("llm2sh  v0.1.0", id="title")
         
         with Container(id="main-container"):
             yield HistoryPanel()
@@ -62,7 +56,7 @@ class LLM2ShApp(App):
         self.query_one(InputPanel).focus()
         
         # Verify API key
-        if not self.settings.openai_api_key or "sk-" not in self.settings.openai_api_key:
+        if not self.settings.openai_api_key:
             self.query_one(ResultPanel).display_error(
                 "OPENAI_API_KEY is not set or invalid. Please check your .env file."
             )
@@ -78,16 +72,8 @@ class LLM2ShApp(App):
         
         # Close output pane if open
         result_panel.show_output(False)
-
-        # Determine mode from tabs
-        active_tab_id = self.query_one("#mode-selector", Tabs).active_tab.id
-        mode_prefix = ""
-        if active_tab_id == "tab-explain":
-            mode_prefix = "Explain: "
-        elif active_tab_id == "tab-script":
-            mode_prefix = "Script: "
             
-        full_query = f"{mode_prefix}{query}"
+        full_query = f"{query}"
 
         # Build prompt messages
         messages = self.processor.build_messages(full_query, self.session_messages)
