@@ -155,3 +155,146 @@ OutputPane {
     background: transparent;
 }
 
+#mode-tabs {
+    width: auto;
+    background: transparent;
+    border: none;
+    height: 3;
+}
+
+#mode-tabs Tab {
+    padding: 0 2;
+}
+
+/* Onboarding Screen Styling */
+OnboardingScreen {
+    align: center middle;
+    background: rgba(15, 23, 42, 0.7);
+}
+
+#onboarding-dialog {
+    width: 60;
+    height: auto;
+    background: $surface;
+    border: thick $accent;
+    padding: 2 4;
+}
+
+#onboarding-title {
+    text-align: center;
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+}
+
+#onboarding-description {
+    text-align: center;
+    color: $text-dim;
+    margin-bottom: 2;
+}
+
+#onboarding-input-label {
+    margin-bottom: 1;
+    text-style: bold;
+}
+
+#api-key-input {
+    margin-bottom: 2;
+}
+
+#onboarding-buttons {
+    align: center middle;
+    margin-top: 1;
+}
+
+/* Settings Screen Styling */
+SettingsScreen {
+    align: center middle;
+    background: rgba(15, 23, 42, 0.7);
+}
+
+#settings-dialog {
+    width: 70;
+    height: 85%;
+    background: $surface;
+    border: thick $border;
+    padding: 2 4;
+}
+
+#settings-title {
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 2;
+    text-align: center;
+}
+
+#settings-form {
+    height: 1fr;
+    margin-bottom: 2;
+}
+
+#settings-form Label {
+    margin-top: 1;
+    margin-bottom: 1;
+    text-style: bold;
+}
+
+#settings-form Input, #settings-form Select {
+    width: 100%;
+}
+
+#settings-dry-run-row {
+    margin-top: 2;
+    height: 3;
+    align: left middle;
+}
+
+#settings-dry-run-row Label {
+    width: 1fr;
+}
+
+#settings-buttons {
+    layout: horizontal;
+    align: right middle;
+    height: 3;
+}
+
+#settings-buttons Button {
+    margin-left: 2;
+}
+
+/* Save Modal Styling */
+SaveModal {
+    align: center middle;
+    background: rgba(15, 23, 42, 0.7);
+}
+
+#save-dialog {
+    width: 55;
+    height: auto;
+    background: $surface;
+    border: thick $border;
+    padding: 2 4;
+}
+
+#save-dialog-title {
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+}
+
+#save-path-input {
+    margin-top: 1;
+    margin-bottom: 2;
+}
+
+#save-dialog-buttons {
+    layout: horizontal;
+    align: right middle;
+}
+
+#save-dialog-buttons Button {
+    margin-left: 2;
+}
+
+
