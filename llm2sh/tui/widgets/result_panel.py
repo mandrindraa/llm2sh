@@ -1,6 +1,4 @@
 import re
-import pyperclip
-from typing import Optional
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.panel import Panel
@@ -32,6 +30,15 @@ class ResultPanel(Container):
             super().__init__()
             self.command = command
 
+    class ClarifyingAnswered(Message):
+        def __init__(self, answer: str) -> None:
+            super().__init__()
+            self.answer = answer
+
+    def on_mount(self) -> None:
+        self.query_one("#btn-yes", Button).display = False
+        self.query_one("#btn-no", Button).display = False
+
     def compose(self):
         with ScrollableContainer(id="result-scroll"):
             yield Static("Enter a query below to get started.", id="result-status")
@@ -46,6 +53,8 @@ class ResultPanel(Container):
             yield Button("Copy", id="btn-copy", variant="primary", disabled=True)
             yield Button("Refine", id="btn-refine", variant="default", disabled=True)
             yield Button("Save", id="btn-save", variant="default", disabled=True)
+            yield Button("Yes", id="btn-yes", variant="success")
+            yield Button("No", id="btn-no", variant="error")
 
     def show_output(self, show: bool) -> None:
         """Toggles the display of the execution output pane."""
@@ -61,6 +70,13 @@ class ResultPanel(Container):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Propagate button actions to the main application."""
+        if event.button.id == "btn-yes":
+            self.post_message(self.ClarifyingAnswered("Yes"))
+            return
+        elif event.button.id == "btn-no":
+            self.post_message(self.ClarifyingAnswered("No"))
+            return
+
         if not self.current_result:
             return
             
@@ -78,9 +94,15 @@ class ResultPanel(Container):
         self.current_result = None
         self.query_one("#result-status", Static).update("[bold yellow]Generating command...[/]")
         
+        # Hide Yes/No buttons
+        self.query_one("#btn-yes", Button).display = False
+        self.query_one("#btn-no", Button).display = False
+
         # Disable buttons during streaming
         for btn_id in ("btn-run", "btn-copy", "btn-refine", "btn-save"):
-            self.query_one(f"#{btn_id}", Button).disabled = True
+            btn = self.query_one(f"#{btn_id}", Button)
+            btn.display = True
+            btn.disabled = True
 
         parsed = self._parse_partial_json(json_stream_text)
         cmd = parsed.get("command", "")
@@ -94,7 +116,11 @@ class ResultPanel(Container):
 
         exp_container = self.query_one("#explanation-container", Static)
         if exp:
-            exp_container.update(f"[bold cyan]Explanation:[/]\n{exp}")
+            exp_text = Text.assemble(
+                Text.from_markup("[bold cyan]Explanation:[/]\n"),
+                Text(exp)
+            )
+            exp_container.update(exp_text)
         else:
             exp_container.update("")
 
@@ -107,13 +133,25 @@ class ResultPanel(Container):
         self.current_result = result
         self.query_one("#result-status", Static).update("")
 
+        # Hide Yes/No buttons
+        self.query_one("#btn-yes", Button).display = False
+        self.query_one("#btn-no", Button).display = False
+
+        # Ensure standard buttons are displayed
+        for btn_id in ("btn-run", "btn-copy", "btn-refine", "btn-save"):
+            self.query_one(f"#{btn_id}", Button).display = True
+
         # Display command with syntax highlighting
         cmd_container = self.query_one("#command-container", Static)
         cmd_container.update(Syntax(result.command, "bash", theme="monokai"))
 
         # Display explanation
         exp_container = self.query_one("#explanation-container", Static)
-        exp_container.update(f"[bold cyan]Explanation:[/]\n{result.explanation}")
+        exp_text = Text.assemble(
+            Text.from_markup("[bold cyan]Explanation:[/]\n"),
+            Text(result.explanation)
+        )
+        exp_container.update(exp_text)
 
         # Display flags table if present
         flags_container = self.query_one("#flags-container", Static)
@@ -149,21 +187,31 @@ class ResultPanel(Container):
     def display_error(self, error_message: str) -> None:
         """Display error text in the panel."""
         self.current_result = None
-        self.query_one("#result-status", Static).update(f"[bold red]Error:[/] {error_message}")
+        status_text = Text.assemble(
+            Text.from_markup("[bold red]Error:[/] "),
+            Text(error_message)
+        )
+        self.query_one("#result-status", Static).update(status_text)
         self.query_one("#command-container", Static).update("")
         self.query_one("#explanation-container", Static).update("")
         self.query_one("#flags-container", Static).update("")
         self.query_one("#risk-container", Static).update("")
         
+        # Hide Yes/No buttons
+        self.query_one("#btn-yes", Button).display = False
+        self.query_one("#btn-no", Button).display = False
+
         for btn_id in ("btn-run", "btn-copy", "btn-refine", "btn-save"):
-            self.query_one(f"#{btn_id}", Button).disabled = True
+            btn = self.query_one(f"#{btn_id}", Button)
+            btn.display = True
+            btn.disabled = True
 
     def display_clarifying_question(self, question: str) -> None:
         """Display clarifying question from the model."""
         self.current_result = None
         self.query_one("#result-status", Static).update("")
         self.query_one("#command-container", Static).update(Panel(
-            question,
+            Text(question),
             title="[bold yellow]Clarifying Question[/]",
             border_style="yellow"
         ))
@@ -171,8 +219,17 @@ class ResultPanel(Container):
         self.query_one("#flags-container", Static).update("")
         self.query_one("#risk-container", Static).update("")
         
+        # Hide standard action buttons
         for btn_id in ("btn-run", "btn-copy", "btn-refine", "btn-save"):
-            self.query_one(f"#{btn_id}", Button).disabled = True
+            self.query_one(f"#{btn_id}", Button).display = False
+            
+        # Show and enable Yes/No buttons
+        btn_yes = self.query_one("#btn-yes", Button)
+        btn_no = self.query_one("#btn-no", Button)
+        btn_yes.display = True
+        btn_yes.disabled = False
+        btn_no.display = True
+        btn_no.disabled = False
 
     def _parse_partial_json(self, json_str: str) -> dict:
         """Extract partial values from an incomplete JSON stream."""

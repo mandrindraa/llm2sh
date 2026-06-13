@@ -1,5 +1,4 @@
 import os
-import pytest
 from unittest import mock
 from llm2sh.config import Settings, get_settings
 

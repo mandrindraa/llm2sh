@@ -16,7 +16,7 @@ async def test_tui_app_mount(mock_openai):
     # Setup dummy API key
     with mock.patch.dict(os.environ, {"OPENAI_API_KEY": "sk-dummy12345"}):
         app = LLM2ShApp()
-        async with app.run_test() as pilot:
+        async with app.run_test():
             # Check components are mounted
             assert app.query_one(HistoryPanel) is not None
             assert app.query_one(ResultPanel) is not None
@@ -195,5 +195,73 @@ async def test_tui_settings_save(mock_openai):
                 mock_save.assert_called_once()
 
 
+@pytest.mark.asyncio
+@mock.patch("llm2sh.core.client.AsyncOpenAI")
+async def test_tui_clarifying_question(mock_openai_class):
+    # Mock the client's streaming call
+    mock_client = mock.MagicMock()
+    mock_openai_class.return_value = mock_client
+    
+    # Mock chat.completions.create for streaming a clarifying question
+    async def mock_create(*args, **kwargs):
+        class AsyncGen:
+            def __init__(self):
+                self.chunks = [
+                    mock.MagicMock(choices=[mock.MagicMock(delta=mock.MagicMock(content='{"command": "", "explanation": "", "flag_explanations": {}, "risk_level": "safe", "risk_reason": null, "is_pipeline": false, "estimated_effect": "", "clarifying_question": "Do you want to search recursively?"}'))])
+                ]
+                self.idx = 0
+            def __aiter__(self):
+                return self
+            async def __anext__(self):
+                if self.idx < len(self.chunks):
+                    res = self.chunks[self.idx]
+                    self.idx += 1
+                    return res
+                raise StopAsyncIteration
+        return AsyncGen()
+        
+    mock_client.chat.completions.create = mock_create
+
+    with mock.patch.dict(os.environ, {"OPENAI_API_KEY": "sk-dummy12345"}):
+        app = LLM2ShApp()
+        async with app.run_test() as pilot:
+            # Query the app
+            input_widget = app.query_one("#query-input")
+            input_widget.value = "find files"
+            
+            # Mock the handle_query_submission call to track execution
+            with mock.patch.object(app, "handle_query_submission", wraps=app.handle_query_submission) as mock_submit:
+                await pilot.press("enter")
+                await pilot.pause()
+                
+                result_panel = app.query_one(ResultPanel)
+                
+                # Check button states
+                btn_yes = result_panel.query_one("#btn-yes")
+                btn_no = result_panel.query_one("#btn-no")
+                assert btn_yes.display is True
+                assert btn_no.display is True
+                assert btn_yes.disabled is False
+                assert btn_no.disabled is False
+                
+                # Verify standard buttons are hidden
+                for btn_id in ("btn-run", "btn-copy", "btn-refine", "btn-save"):
+                    assert result_panel.query_one(f"#{btn_id}").display is False
+                
+                # Click yes button
+                await pilot.click("#btn-yes")
+                await pilot.pause()
+                
+                # Verify that it triggered handle_query_submission with "Yes"
+                mock_submit.assert_any_call("Yes")
 
 
+@pytest.mark.asyncio
+async def test_tui_display_error_markup_escaping():
+    with mock.patch.dict(os.environ, {"OPENAI_API_KEY": "sk-dummy12345"}):
+        app = LLM2ShApp()
+        async with app.run_test():
+            result_panel = app.query_one(ResultPanel)
+            # Call display_error with a string containing brackets that would normally trigger a MarkupError
+            # This should complete successfully without raising any MarkupError
+            result_panel.display_error("Error [type=missing, input_value={'a': 1}]")

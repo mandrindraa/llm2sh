@@ -14,6 +14,11 @@ class SettingsScreen(Screen):
             ("GPT-3.5 Turbo", "gpt-3.5-turbo"),
             ("qwen2.5-coder:7b", "qwen2.5-coder:7b"),
         ]
+        
+        # Ensure custom configured models (e.g. from local .env) are valid choices
+        model_keys = [c[1] for c in model_choices]
+        if settings.model and settings.model not in model_keys:
+            model_choices.append((settings.model, settings.model))
         shell_choices = [
             ("Bash", "bash"),
             ("Zsh", "zsh"),

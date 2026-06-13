@@ -1,5 +1,4 @@
 import pytest
-import os
 import asyncio
 from unittest import mock
 from llm2sh.core.executor import ShellExecutor

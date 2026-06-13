@@ -2,8 +2,8 @@ import json
 import pyperclip
 from typing import ClassVar
 from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, Tabs, Tab, Label, Input
-from textual.containers import Container, Horizontal
+from textual.widgets import Footer, Tabs, Tab, Label, Input
+from textual.containers import Container
 from textual.binding import Binding
 from textual.reactive import reactive
 
@@ -81,7 +81,7 @@ class LLM2ShApp(App):
     async def handle_query_submission(self, query: str) -> None:
         """Process natural language query, stream token results, and update display."""
         # Add to history
-        if query not in self.queries_history:
+        if query.lower() not in ("yes", "no") and query not in self.queries_history:
             self.queries_history.append(query)
             self.query_one(HistoryPanel).update_history(self.queries_history)
 
@@ -226,6 +226,10 @@ class LLM2ShApp(App):
             SaveModal(default_filename="script.sh" if self.current_mode == "script" else "command.sh"),
             callback=lambda path: self.save_to_file(path, message.command)
         )
+
+    def on_result_panel_clarifying_answered(self, message: ResultPanel.ClarifyingAnswered) -> None:
+        """Handle Yes/No answers to clarifying questions."""
+        self.run_worker(self.handle_query_submission(message.answer))
 
     def save_to_file(self, path: str | None, content: str) -> None:
         if not path:

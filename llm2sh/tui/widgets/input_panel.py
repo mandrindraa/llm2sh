@@ -1,5 +1,5 @@
 from textual.message import Message
-from textual.widgets import Input, Label
+from textual.widgets import Input
 from textual.containers import Container
 
 class InputPanel(Container):

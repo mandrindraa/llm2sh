@@ -1,4 +1,3 @@
-import json
 from typing import AsyncIterator
 from openai import AsyncOpenAI
 from llm2sh.config import get_settings
@@ -27,13 +26,34 @@ class OpenAIClient:
         """
         Stream the raw JSON token output from OpenAI.
         """
-        stream = await self.client.chat.completions.create(
-            model=self.settings.model,
-            messages=messages,
-            response_format={"type": "json_object"},
-            stream=True,
-        )
-        async for chunk in stream:
-            content = chunk.choices[0].delta.content
-            if content:
-                yield content
+        try:
+            # Try streaming with structured json_schema for models supporting Structured Outputs in streaming
+            stream = await self.client.chat.completions.create(
+                model=self.settings.model,
+                messages=messages,
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": "CommandResult",
+                        "strict": True,
+                        "schema": CommandResult.model_json_schema()
+                    }
+                },
+                stream=True,
+            )
+            async for chunk in stream:
+                content = chunk.choices[0].delta.content
+                if content:
+                    yield content
+        except Exception:
+            # Fallback to generic json_object streaming if json_schema is not supported by custom API backend
+            stream = await self.client.chat.completions.create(
+                model=self.settings.model,
+                messages=messages,
+                response_format={"type": "json_object"},
+                stream=True,
+            )
+            async for chunk in stream:
+                content = chunk.choices[0].delta.content
+                if content:
+                    yield content
